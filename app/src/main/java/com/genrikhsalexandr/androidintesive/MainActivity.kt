@@ -1,5 +1,6 @@
 package com.genrikhsalexandr.androidintesive
 
+import PlayerService
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -9,59 +10,60 @@ import androidx.core.view.isVisible
 import com.genrikhsalexandr.androidintesive.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
-    private var player: MediaPlayer? = null
-    private var currentSong = mutableListOf(
-        R.raw.johann_strauss_waltz_blue_danube,
-        R.raw.fryderyk_chopin_fantasia_imprompt, R.raw.rachmaninov_italian_polka,
-        R.raw.rimsky_korsakov_flight_of_the_bumblebee, R.raw.sergei_prokofiev_dance_of_the_knights
-    )
-    private var currentSongIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        PlayerService.startService(this)
+        PlayerManager.initPlayer()
         sound()
     }
 
     private fun sound() {
         binding.play.setOnClickListener {
-            if (player == null)
-                player = MediaPlayer.create(this, currentSong[currentSongIndex])
-            player?.start()
+            if (PlayerManager.player == null)
+                PlayerManager.player = MediaPlayer.create(
+                    this.applicationContext,
+                    PlayerManager.currentSong[PlayerManager.currentSongIndex]
+                )
+            PlayerManager.player?.start()
             initSeekBar()
             binding.pause.isVisible = true
-            binding.play.isVisible = false
-
-        }
+            binding.play.isVisible = false      }
 
         binding.pause.setOnClickListener {
-            if (player != null) {
-                player?.pause()
+            if (PlayerManager.player != null) {
+                PlayerManager.player?.pause()
                 binding.pause.isVisible = false
                 binding.play.isVisible = true
             }
         }
         binding.stop.setOnClickListener {
-            if (player != null) {
-                player?.stop()
-                player?.release()
-                player = null
+            if (PlayerManager.player != null) {
+                PlayerManager.player?.stop()
+                PlayerManager.player?.release()
+                PlayerManager.player = null
                 binding.pause.isVisible = false
                 binding.play.isVisible = true
             }
         }
 
         binding.next.setOnClickListener {
-            if (player != null) {
-                player?.stop()
-                player?.release()
-                player = null
-                currentSongIndex++
-                if (currentSongIndex >= currentSong.size) currentSongIndex = 0
-                player = MediaPlayer.create(this, currentSong[currentSongIndex])
-                player?.start()
+            if (PlayerManager.player != null) {
+                PlayerManager.player?.stop()
+                PlayerManager.player?.release()
+                PlayerManager.player = null
+                PlayerManager.currentSongIndex++
+                if (PlayerManager.currentSongIndex >= PlayerManager.currentSong.size) PlayerManager.currentSongIndex =
+                    0
+                PlayerManager.player = MediaPlayer.create(
+                    this,
+                    PlayerManager.currentSong[PlayerManager.currentSongIndex]
+                )
+                PlayerManager.player?.start()
                 initSeekBar()
                 binding.pause.isVisible = true
                 binding.play.isVisible = false
@@ -69,14 +71,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.previous.setOnClickListener {
-            if (player != null) {
-                player?.stop()
-                player?.release()
-                player = null
-                currentSongIndex--
-                if (currentSongIndex < 0) currentSongIndex = currentSong.size - 1
-                player = MediaPlayer.create(this, currentSong[currentSongIndex])
-                player?.start()
+            if (PlayerManager.player != null) {
+                PlayerManager.player?.stop()
+                PlayerManager.player?.release()
+                PlayerManager.player = null
+                PlayerManager.currentSongIndex--
+                if (PlayerManager.currentSongIndex < 0) PlayerManager.currentSongIndex =
+                    PlayerManager.currentSong.size - 1
+                PlayerManager.player = MediaPlayer.create(
+                    this,
+                    PlayerManager.currentSong[PlayerManager.currentSongIndex]
+                )
+                PlayerManager.player?.start()
                 initSeekBar()
                 binding.pause.isVisible = true
                 binding.play.isVisible = false
@@ -85,26 +91,32 @@ class MainActivity : AppCompatActivity() {
 
         binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) player?.seekTo(progress)
+                if (fromUser) PlayerManager.player?.seekTo(progress)
             }
+
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
         })
     }
 
-    private fun initSeekBar() {
-        binding.seekBar.max = player!!.duration
+  private fun initSeekBar() {
+      binding.seekBar.max = PlayerManager.player!!.duration
 
-        val handler = Handler()
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                try {
-                    binding.seekBar.progress = player!!.currentPosition
-                    handler.postDelayed(this, 1000)
-                } catch (e: Exception) {
-                    binding.seekBar.progress = 0
-                }
-            }
-        }, 0)
+      val handler = Handler()
+      handler.postDelayed(object : Runnable {
+          override fun run() {
+              try {
+                  binding.seekBar.progress = PlayerManager.player!!.currentPosition
+                  handler.postDelayed(this, 1000)
+              } catch (e: Exception) {
+                  binding.seekBar.progress = 0
+              }
+          }
+      }, 0)
+  }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        PlayerService.stopService(this.applicationContext)
     }
 }
