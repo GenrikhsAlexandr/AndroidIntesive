@@ -1,6 +1,5 @@
 package com.genrikhsalexandr.androidintesive
 
-import PlayerService
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -17,8 +16,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+       PlayerManager.initPlayer()
         PlayerService.startService(this)
-        PlayerManager.initPlayer()
         sound()
     }
 
@@ -32,7 +31,8 @@ class MainActivity : AppCompatActivity() {
             PlayerManager.player?.start()
             initSeekBar()
             binding.pause.isVisible = true
-            binding.play.isVisible = false      }
+            binding.play.isVisible = false
+        }
 
         binding.pause.setOnClickListener {
             if (PlayerManager.player != null) {
@@ -117,6 +117,5 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        PlayerService.stopService(this.applicationContext)
     }
 }

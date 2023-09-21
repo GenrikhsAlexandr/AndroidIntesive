@@ -1,10 +1,7 @@
 package com.genrikhsalexandr.androidintesive
 
 import android.media.MediaPlayer
-import android.os.Handler
 import android.util.Log
-import android.widget.SeekBar
-import androidx.core.view.isVisible
 
 object PlayerManager{
 
@@ -23,6 +20,4 @@ object PlayerManager{
         fun destroy() {
             Log.d("Manager", "onDestroy Player")
         }
-
-
 }
