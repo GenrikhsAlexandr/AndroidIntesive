@@ -1,5 +1,7 @@
 package com.genrikhsalexandr.androidintesive
 
+import android.app.ActivityManager
+import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -16,22 +18,30 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-       PlayerManager.initPlayer()
-        PlayerService.startService(this)
-        sound()
+        if (PlayerManager.player==null) {
+            PlayerManager.initPlayer()
+            PlayerService.startServicePlayer(this)
+            sound()
+        } else {
+            sound()
+            initSeekBar()
+            binding.pause.isVisible = true
+            binding.play.isVisible = false
+        }
     }
 
     private fun sound() {
         binding.play.setOnClickListener {
-            if (PlayerManager.player == null)
+            if (PlayerManager.player==null)
                 PlayerManager.player = MediaPlayer.create(
                     this.applicationContext,
                     PlayerManager.currentSong[PlayerManager.currentSongIndex]
                 )
-            PlayerManager.player?.start()
-            initSeekBar()
-            binding.pause.isVisible = true
-            binding.play.isVisible = false
+                PlayerManager.player?.start()
+                initSeekBar()
+                binding.pause.isVisible = true
+                binding.play.isVisible = false
+
         }
 
         binding.pause.setOnClickListener {
@@ -99,21 +109,22 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-  private fun initSeekBar() {
-      binding.seekBar.max = PlayerManager.player!!.duration
+    private fun initSeekBar() {
+        binding.seekBar.max = PlayerManager.player!!.duration
 
-      val handler = Handler()
-      handler.postDelayed(object : Runnable {
-          override fun run() {
-              try {
-                  binding.seekBar.progress = PlayerManager.player!!.currentPosition
-                  handler.postDelayed(this, 1000)
-              } catch (e: Exception) {
-                  binding.seekBar.progress = 0
-              }
-          }
-      }, 0)
-  }
+        val handler = Handler()
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                try {
+                    binding.seekBar.progress = PlayerManager.player!!.currentPosition
+                    handler.postDelayed(this, 1000)
+                } catch (e: Exception) {
+                    binding.seekBar.progress = 0
+                }
+            }
+        }, 0)
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
