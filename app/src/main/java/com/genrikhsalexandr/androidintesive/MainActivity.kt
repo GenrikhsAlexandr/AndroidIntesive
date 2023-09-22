@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        PlayerService.stopServicePlayer(this)
+        if (PlayerManager.player ==null)
+            PlayerService.stopServicePlayer(this)
     }
 }
