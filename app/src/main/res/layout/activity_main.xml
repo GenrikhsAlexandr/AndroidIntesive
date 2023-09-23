@@ -3,21 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#A5A09B">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glCenter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.87" />
 
     <com.genrikhsalexandr.androidintesive.CustomTextView
         android:id="@+id/customTV"
@@ -27,7 +28,7 @@
         app:layout_constraintBottom_toTopOf="@+id/glCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Hello" />
+        tools:text="Hello"/>
 
     <SeekBar
         android:layout_width="250dp"
@@ -37,17 +38,16 @@
         android:paddingTop="200dp"
         android:progress="50"
         android:rotation="270"
-
+        app:layout_constraintBottom_toTopOf="@+id/customTV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.genrikhsalexandr.androidintesive.CustomDrumView
         android:id="@+id/drum"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/glCenter"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/customTV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
