@@ -65,11 +65,6 @@ class PlayerService : LifecycleService() {
             .setContentTitle("Music Player")
             .setContentText("Playing Music")
             .setContentIntent(pendingIntent)
-            .addAction(R.drawable.ic_play, "Play", pendingIntent)
-            .addAction(R.drawable.ic_pause, "Pause", pendingIntent)
-            .addAction(R.drawable.ic_stop, "Stop", pendingIntent)
-            .addAction(R.drawable.ic_next, "Next", pendingIntent)
-            .addAction(R.drawable.ic_previous, "Previous", pendingIntent)
             .build()
         startForeground(NOTIFICATION_ID, notification)
     }
