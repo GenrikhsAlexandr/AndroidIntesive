@@ -30,18 +30,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <SeekBar
-        android:id="@+id/seekbar"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:max="100"
-        android:min="0"
-        android:rotation="270"
-        android:layout_centerInParent="true"
-        app:layout_constraintBottom_toTopOf="@+id/customTV"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.genrikhsalexandr.androidintesive.CustomDrumView
         android:id="@+id/drum"
         android:layout_width="300dp"
