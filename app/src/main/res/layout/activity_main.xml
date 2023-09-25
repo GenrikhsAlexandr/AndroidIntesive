@@ -36,7 +36,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/play"
         android:layout_width="60dp"
@@ -92,6 +91,5 @@
         app:layout_constraintStart_toStartOf="@id/glCenter"
         app:layout_constraintTop_toBottomOf="@id/seekBar"
         app:srcCompat="@drawable/ic_next" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
