@@ -17,21 +17,26 @@ class MainActivity : AppCompatActivity() {
         val drumView = binding.drum
         drumView.listener = object : CustomDrumView.Listener {
             override fun onDrumSpinned(position: Int) {
-                if (position % 2 == 0) {
-                    binding.customTV.isVisible = true
-                } else {
-                    binding.image.isVisible = true
-                    Picasso.get().load("https://picsum.photos/id/12/200")
-                        .placeholder(R.drawable.ic_launcher_foreground)
-                        .error(R.color.black)
-                        .into(binding.image)
+                when (position) {
+                    1,2,4,6 -> {
+                        binding.customTV.isVisible = true
+                    }
+
+                    else -> {
+                        binding.image.isVisible = true
+                        Picasso.get().load("https://picsum.photos/id/12/200")
+                            .placeholder(R.drawable.ic_launcher_foreground)
+                            .error(R.drawable.not_supported)
+                            .into(binding.image)
+                    }
+                }
+
+                binding.reset.setOnClickListener {
+                    binding.customTV.isVisible = false
+                    Picasso.get().cancelRequest(binding.image)
+                    binding.image.isVisible = false
                 }
             }
-        }
-        binding.reset.setOnClickListener {
-            binding.customTV.isVisible = false
-            Picasso.get().cancelRequest(binding.image)
-            binding.image.isVisible = false
         }
     }
 }

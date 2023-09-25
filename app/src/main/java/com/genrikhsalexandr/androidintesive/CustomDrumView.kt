@@ -37,8 +37,8 @@ class CustomDrumView(context: Context, attrs: AttributeSet) : View(context, attr
         style = Paint.Style.FILL
     }
     private val trianglePath = Path()
-    private var currentAngle = 90f
     private val sweepAngle = 360f / rainbowColors.size
+    private var currentAngle = 0f
 
     private var isSpinning = false
 
@@ -77,6 +77,11 @@ class CustomDrumView(context: Context, attrs: AttributeSet) : View(context, attr
             lineTo(bottomRightX, bottomRightY)
             close()
         }
+        Log.d("xxx", " centerX $centerX")
+        Log.d("xxx", " centerY $centerY")
+        Log.d("xxx", " radius $radius")
+        Log.d("xxx", " rectF $rectF")
+
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -107,7 +112,7 @@ class CustomDrumView(context: Context, attrs: AttributeSet) : View(context, attr
         val end = 8 * (360f - 60f * random)
         val start = currentAngle % 360
         Log.d("xxx", "currentstart $currentAngle")
-        Log.d("xxx", "end$end")
+        Log.d("xxx", "end${end % 360}")
         Log.d("xxx", "start$start")
 
         isSpinning = true
@@ -120,14 +125,9 @@ class CustomDrumView(context: Context, attrs: AttributeSet) : View(context, attr
             }
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    val position = (currentAngle / sweepAngle).toInt() % rainbowColors.size
+                    val position = ((currentAngle %360f+(2*sweepAngle-90f))/ sweepAngle).toInt()
                     Log.d("xxx", "onAnimationEnd $position")
-                    Log.d("xxx", "currentAngle $currentAngle")
-                    Log.d("xxx", "sweepAngle $sweepAngle")
-                    Log.d("xxx", "rainbowColors.size $rainbowColors.size")
-
                     isSpinning = false
-
                     listener?.onDrumSpinned(position)
                 }
             })

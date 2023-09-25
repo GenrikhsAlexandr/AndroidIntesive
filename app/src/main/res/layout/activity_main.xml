@@ -22,17 +22,17 @@
 
     <com.genrikhsalexandr.androidintesive.CustomTextView
         android:id="@+id/customTV"
-        android:gravity="center"
-        android:layout_width="200dp"
-        android:visibility="gone"
+        android:layout_width="300dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/glCenter"
+        android:gravity="center"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/glCenter" />
 
     <com.genrikhsalexandr.androidintesive.CustomDrumView
         android:id="@+id/drum"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/customTV"
