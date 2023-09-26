@@ -2,6 +2,7 @@ package com.genrikhsalexandr.androidintesive
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -15,25 +16,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (PlayerManager.player == null) {
-            PlayerManager.initPlayer(applicationContext)
-            PlayerService.startServicePlayer(this)
-            sound()
-        } else {
-            sound()
-            initSeekBar()
+        sound()
+        initSeekBar()
+        if (PlayerManager.player != null && PlayerManager.player?.isPlaying == true) {
             binding.pause.isVisible = true
             binding.play.isVisible = false
+
+        } else {
+            PlayerManager.getPlayer(this)
+            PlayerService.startServicePlayer(this)
         }
     }
 
     private fun sound() {
         binding.play.setOnClickListener {
-            if (PlayerManager.player == null) PlayerManager.initPlayer(applicationContext)
+            PlayerManager.getPlayer(this)
             PlayerManager.play()
             initSeekBar()
             binding.pause.isVisible = true
             binding.play.isVisible = false
+            Log.d("xxx", "play")
         }
 
         binding.pause.setOnClickListener {
@@ -49,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.next.setOnClickListener {
             PlayerManager.next()
-            if (PlayerManager.player == null) PlayerManager.initPlayer(applicationContext)
+            PlayerManager.getPlayer(this)
             PlayerManager.play()
             initSeekBar()
             binding.pause.isVisible = true
@@ -58,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.previous.setOnClickListener {
             PlayerManager.previous()
-            if (PlayerManager.player == null) PlayerManager.initPlayer(applicationContext)
+            PlayerManager.getPlayer(this)
             PlayerManager.play()
             initSeekBar()
             binding.pause.isVisible = true
@@ -69,19 +71,20 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) PlayerManager.player?.seekTo(progress)
             }
+
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
         })
     }
 
     private fun initSeekBar() {
-        binding.seekBar.max = PlayerManager.player!!.duration
+        binding.seekBar.max = PlayerManager.getDuration()
 
         val handler = Handler()
         handler.postDelayed(object : Runnable {
             override fun run() {
                 try {
-                    binding.seekBar.progress = PlayerManager.player!!.currentPosition
+                    binding.seekBar.progress = PlayerManager.getCurrentPosition()
                     handler.postDelayed(this, 1000)
                 } catch (e: Exception) {
                     binding.seekBar.progress = 0
@@ -92,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (PlayerManager.player ==null)
+        if (PlayerManager.player?.isPlaying==false || PlayerManager.player == null)
             PlayerService.stopServicePlayer(this)
     }
 }

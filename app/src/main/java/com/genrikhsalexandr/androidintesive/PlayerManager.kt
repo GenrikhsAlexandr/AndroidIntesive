@@ -7,19 +7,33 @@ import android.util.Log
 object PlayerManager {
 
     var player: MediaPlayer? = null
-    private var currentSong = mutableListOf(
+    private var songList = mutableListOf(
         R.raw.johann_strauss_waltz_blue_danube,
         R.raw.fryderyk_chopin_fantasia_imprompt, R.raw.rachmaninov_italian_polka,
         R.raw.rimsky_korsakov_flight_of_the_bumblebee, R.raw.sergei_prokofiev_dance_of_the_knights
     )
     private var currentSongIndex = 0
 
-    fun initPlayer(context: Context) {
-        player = MediaPlayer.create(
+    fun getCurrentPosition(): Int {
+        return player?.currentPosition ?: 0
+    }
+
+    fun getDuration():Int{
+        return player?.duration ?: 0
+    }
+
+
+    fun getPlayer(context: Context): MediaPlayer {
+        if (player == null) {
+            player = initPlayer(context.applicationContext)
+        }
+        return player!!
+    }
+    private fun initPlayer(context: Context): MediaPlayer? {
+        return MediaPlayer.create(
             context,
-            currentSong[currentSongIndex]
+            songList[currentSongIndex]
         )
-        Log.d("Manager", "init Player")
     }
 
     fun play() {
@@ -38,15 +52,16 @@ object PlayerManager {
 
     fun next() {
         stop()
-        currentSongIndex++
-        if (currentSongIndex >= currentSong.size) currentSongIndex =
-            0
+        if (currentSongIndex < songList.size-1) currentSongIndex++
+        else currentSongIndex = 0
+        Log.d("xxx","currendSoundIndex $currentSongIndex")
     }
 
     fun previous() {
         stop()
-        currentSongIndex--
-        if (currentSongIndex < 0) currentSongIndex =
-            currentSong.size - 1
+        if (currentSongIndex > 0) currentSongIndex--
+        else currentSongIndex = songList.size - 1
+        Log.d("xxx","currendSoundIndex $currentSongIndex")
+
     }
 }
