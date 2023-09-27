@@ -10,10 +10,22 @@ object ContactRepositoryImpl : ContactsListRepository {
 
     private var autoIncrementId = 0
 
+    init {
+        for (a in 1..100) {
+            val number = a + 89990000000
+            val item = ContactItem("Name $a", "Surname $a", number)
+            addContactItem(item)
+            Log.d("Contact", "$item")
+
+        }
+    }
+
     override fun addContactItem(contactItem: ContactItem) {
         if (contactItem.id==ContactItem.UNDEFINED_ID)
         {contactItem.id = autoIncrementId++}
         contactsList.add(contactItem)
+        Log.d("Contact", "addContactItem $contactItem")
+
     }
 
     override fun deleteContactItem(contactItem: ContactItem) {

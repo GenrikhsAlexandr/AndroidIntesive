@@ -17,13 +17,4 @@ class ContactsViewModel : ViewModel() {
 
     val list = getContactsListUseCase.getContactsList()
 
-    init {
-        for (a in 1..100) {
-            val number = a + 89990000000
-            val item = ContactItem("Name $a", "Surname $a", number)
-            ContactRepositoryImpl.addContactItem(item)
-            Log.d("Contact", "$item")
-
-        }
-    }
 }
