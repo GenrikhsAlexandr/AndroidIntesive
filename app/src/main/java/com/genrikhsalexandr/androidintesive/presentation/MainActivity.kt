@@ -1,4 +1,4 @@
-package com.genrikhsalexandr.androidintesive
+package com.genrikhsalexandr.androidintesive.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
