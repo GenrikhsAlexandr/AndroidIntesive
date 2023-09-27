@@ -83,12 +83,8 @@ class MainActivity : AppCompatActivity() {
         val handler = Handler()
         handler.postDelayed(object : Runnable {
             override fun run() {
-                try {
                     binding.seekBar.progress = PlayerManager.getCurrentPosition()
                     handler.postDelayed(this, 1000)
-                } catch (e: Exception) {
-                    binding.seekBar.progress = 0
-                }
             }
         }, 0)
     }
