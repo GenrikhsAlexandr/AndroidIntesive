@@ -10,14 +10,18 @@ object ContactRepositoryImpl : ContactsListRepository {
 
     private var autoIncrementId = 0
 
-    init {
+    fun generateContacts(): List<ContactItem> {
+        val contacts = mutableListOf<ContactItem>()
+
         for (a in 1..100) {
-            val number = a + 89990000000
-            val item = ContactItem("Name $a", "Surname $a", number)
-            addContactItem(item)
+            val number = (a + 9990000000).toString()
+            val item = ContactItem(" Вася $a", "Иванов $a", "+7$number",true)
+            contacts.add(item)
             Log.d("Contact", "$item")
 
         }
+
+        return contacts
     }
 
     override fun addContactItem(contactItem: ContactItem) {
