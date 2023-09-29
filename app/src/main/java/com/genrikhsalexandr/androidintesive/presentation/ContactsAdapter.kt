@@ -74,6 +74,7 @@ class ContactsAdapter(
                 numberContact.text = contactItem.number
                 root.setOnClickListener {
                     onContactItemClickListener.invoke(contactItem)
+                    update(contactItem)
                 }
             }
         }
@@ -87,6 +88,8 @@ class ContactsAdapter(
             }
             itemView.setOnClickListener {
                 onContactItemClickListener.invoke(updatedItem)
+                updatedItem.isSelected = !updatedItem.isSelected // Инвертируйте состояние при нажатии
+                update(updatedItem)
             }
         }
     }
@@ -102,6 +105,7 @@ class ContactsAdapter(
                 birthday.text =contactItem.birthDay
                 root.setOnClickListener {
                     onContactItemClickListener.invoke(contactItem)
+                    update(contactItem)
                 }
             }
         }
@@ -115,6 +119,8 @@ class ContactsAdapter(
             }
             itemView.setOnClickListener {
                 onContactItemClickListener.invoke(updatedItem)
+                updatedItem.isSelected = !updatedItem.isSelected // Инвертируйте состояние при нажатии
+                update(updatedItem)
             }
         }
     }

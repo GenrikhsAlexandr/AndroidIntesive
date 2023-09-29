@@ -30,6 +30,7 @@ class ContactsFragment : Fragment() {
 
     private val contactAdapter: ContactsAdapter = ContactsAdapter(
         onContactItemClickListener = { clickedContactItem ->
+            changeIsSelectedState(clickedContactItem)
 
         },
     )
