@@ -15,7 +15,7 @@
             android:id="@+id/iconContact"
             android:layout_width="48dp"
             android:layout_height="0dp"
-            android:src="@drawable/baseline_account_box_24"
+            android:src="@drawable/ic_account"
             app:layout_constraintBottom_toBottomOf="@id/tlNameContact"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/tlNameContact" />
@@ -62,7 +62,7 @@
             android:id="@+id/iconPhone"
             android:layout_width="48dp"
             android:layout_height="0dp"
-            android:src="@drawable/baseline_local_phone_24"
+            android:src="@drawable/ic_phone"
             app:layout_constraintBottom_toBottomOf="@id/tlPhone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/tlPhone" />

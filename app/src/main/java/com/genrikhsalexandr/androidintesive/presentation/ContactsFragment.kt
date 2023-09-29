@@ -28,9 +28,11 @@ class ContactsFragment : Fragment() {
 
     private val editContactItemUseCase = EditContactItemUseCase(contactRepository)
 
-    private  val contactAdapter: ContactsAdapter = ContactsAdapter()
+    private val contactAdapter: ContactsAdapter = ContactsAdapter(
+        onContactItemClickListener = { clickedContactItem ->
 
-
+        },
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,8 +40,7 @@ class ContactsFragment : Fragment() {
     ): View {
         _binding = FragmentContactsBinding.inflate(inflater, container, false)
         binding.listItemContacts.adapter = contactAdapter
-        val contactsList = contactRepository.generateContacts()
-        contactAdapter.submitData(contactsList)
+        contactAdapter.submitList(getContactItem())
         contactAdapter.onContactItemClickListener
         return binding.root
     }
@@ -56,12 +57,10 @@ class ContactsFragment : Fragment() {
 
     private fun delContactItem(contactItem: ContactItem) {
         deleteContactItemUseCase.deleteContactItem(contactItem)
-        getContactItem()
     }
 
     private fun changeContactItem(contactItem: ContactItem) {
         editContactItemUseCase.editContactItem(contactItem)
-        getContactItem()
     }
 
 
@@ -80,7 +79,7 @@ class ContactsFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val item = contactAdapter.contactsList[viewHolder.adapterPosition]
+                val item = contactAdapter.currentList[viewHolder.adapterPosition]
                 delContactItem(item)
             }
         }
@@ -90,8 +89,13 @@ class ContactsFragment : Fragment() {
 
     private fun setupClickListener() {
         contactAdapter.onContactItemClickListener = {
-
+            changeIsSelectedState(it)
         }
+    }
+
+    fun changeIsSelectedState(contactItem: ContactItem) {
+
+        editContactItemUseCase.editContactItem(contactItem)
     }
 
 
