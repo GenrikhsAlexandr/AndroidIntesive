@@ -8,8 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.genrikhsalexandr.androidintesive.databinding.FragmentDBinding
 
-class FragmentD : Fragment() {
-
+class FragmentD: Fragment() {
 
     private var _binding: FragmentDBinding? = null
     private val binding: FragmentDBinding get() = _binding!!
@@ -28,4 +27,3 @@ class FragmentD : Fragment() {
         return binding.root
     }
 }
-

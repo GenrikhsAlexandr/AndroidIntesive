@@ -1,10 +1,10 @@
+package com.genrikhsalexandr.androidintesive
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.genrikhsalexandr.androidintesive.FragmentD
-import com.genrikhsalexandr.androidintesive.R
 import com.genrikhsalexandr.androidintesive.databinding.FragmentCBinding
 
 class FragmentC : Fragment() {
@@ -37,5 +37,15 @@ class FragmentC : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        fun newInstance(): FragmentC {
+            return FragmentC().apply {
+                arguments = Bundle().apply {
+                    putString("message", "Hello Fragment C")
+                }
+            }
+        }
     }
 }

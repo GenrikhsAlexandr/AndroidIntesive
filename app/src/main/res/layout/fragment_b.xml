@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".BFragment">
+    tools:context=".FragmentB">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/nameFragment"
