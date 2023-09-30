@@ -17,10 +17,8 @@ class UserListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUserListBinding.inflate(inflater, container, false)
-        binding.listItem.setOnClickListener {
-            detailFragment()
-        }
         return binding.root
+
     }
 
     private fun detailFragment() {

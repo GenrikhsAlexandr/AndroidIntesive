@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:orientation="horizontal"
+    tools:context=".UserListFragment"
+    android:id="@+id/list_item">
+
+    <ImageView
+        android:id="@+id/iconContact"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_android" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/nameContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Ivan"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+        tools:text="Aleksandr" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/surNameContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:text=""
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+        tools:text="Petrov" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/numberContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+        tools:text="+79991234567" />
+
+
+
+</LinearLayout>
