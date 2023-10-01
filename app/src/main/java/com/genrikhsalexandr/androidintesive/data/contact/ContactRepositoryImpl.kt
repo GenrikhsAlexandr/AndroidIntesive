@@ -1,56 +1,51 @@
 package com.genrikhsalexandr.androidintesive.data.contact
 
 import android.util.Log
-import com.genrikhsalexandr.androidintesive.domain.contact.ContactItem
-import com.genrikhsalexandr.androidintesive.domain.contact.ContactsListRepository
+import com.genrikhsalexandr.androidintesive.domain.contact.Contact
+import kotlinx.coroutines.flow.MutableStateFlow
 
-object ContactRepositoryImpl : ContactsListRepository {
 
-    private val contactsList = mutableListOf<ContactItem>()
+object ContactRepositoryImpl  {
 
-    private var autoIncrementId = 0
+    private const val MAX_INITIAL_ID = 100
 
-init {
-    for (a in 1..100) {
-        val number = (a + 9990000000).toString()
-        val item = ContactItem.Full(" Вася $a", "Иванов $a", "+7$number", true, "25.04.2003")
-        addContactItem(item)
-        Log.d("Contact", "$item")
+    private val _contactsList = MutableStateFlow<List<Contact>>(emptyList())
+    val contactsList = _contactsList
+    private var autoIncrementId = MAX_INITIAL_ID
 
-    }
-}
-
-    override fun addContactItem(contactItem: ContactItem) {
-        if (contactItem.id==ContactItem.UNDEFINED_ID)
-        {contactItem.id = autoIncrementId++}
-        contactsList.add(contactItem)
-        Log.d("xxx", "addContactItem $contactItem")
-
-    }
-
-    override fun deleteContactItem(contactItem: ContactItem) {
-        contactsList.remove(contactItem)
-        Log.d("xxx", "deleteContactItem $contactItem")
-
-    }
-
-    override fun editContactItem(contactItem: ContactItem) {
-        val oldContactItem = getContactItem(contactItem.id)
-        contactsList.remove(oldContactItem)
-        addContactItem(contactItem)
-        Log.d("xxx", "editContactItem $contactItem")
-
+    init {
+        buildList {
+            for (a in 1..MAX_INITIAL_ID) {
+                val number = (a + 9990000000)
+                val item = Contact(
+                    id = a,
+                    name = " Вася $a",
+                    surName = "Иванов $a",
+                    number = "+7$number",
+                    birthDay = if (a % 2 == 0) {
+                        "26.03.1998"
+                    } else {
+                        null
+                    }
+                )
+                add(item)
+                Log.d("xxx", "buildList $item")
+            }
+        }
     }
 
-    override fun getContactItem(contactItemId: Int): ContactItem {
-        return contactsList.find {
-            it.id == contactItemId
-        } ?: throw RuntimeException("Element with $contactItemId not found")
-        Log.d("xxx", "getContactItem $contactItemId")
-
+     fun addContact(contact: Contact) {
+        val id = autoIncrementId++
+        _contactsList.value = _contactsList.value.plus(
+            contact.copy(id = id)
+        )
+        Log.d("xxx", "addContact $contact")
     }
 
-    override fun getContactsList(): List<ContactItem> {
-        return contactsList.toList()
+     fun deleteContact(contact: Contact) {
+        _contactsList.value = contactsList.value.minus(
+            contact
+        )
+        Log.d("xxx", "deleteContact $contact")
     }
 }

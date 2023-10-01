@@ -17,10 +17,13 @@ class ContactsAdapter(
 
     var count = 0
     override fun getItemViewType(position: Int): Int {
+        Log.d("xxx", "getItemViewType $position")
+
         return getItem(position).viewType
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        Log.d("xxx", "onCreateViewHolder ${++count}")
         return when (viewType) {
             R.layout.list_item_contacts_short -> {
                 ContactItemShortViewHolder(
@@ -31,6 +34,7 @@ class ContactsAdapter(
                     )
                 )
             }
+
             R.layout.list_item_contacts_full -> {
                 ContactItemFullViewHolder(
                     ListItemContactsFullBinding.inflate(
@@ -40,29 +44,54 @@ class ContactsAdapter(
                     )
                 )
             }
+
             else -> error("Unknown view type: $viewType")
+
         }
     }
-
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int
     ) {
-        Log.d("xxx","onBindViewHolder ${++count}")
+        Log.d("xxx", "onBindViewHolder ${++count}")
         when (holder) {
             is ContactItemShortViewHolder -> {
                 holder.bindShort(getItem(position))
-               /* val updatedItem: ContactItem = payloads.first() as ContactItem
-                holder.update(updatedItem)
-*/
             }
             is ContactItemFullViewHolder -> {
                 holder.bindFull((getItem(position)))
-               /* val updatedItem: ContactItem = payloads.first() as ContactItem
-                holder.update(updatedItem)*/
             }
         }
+    }
+
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        when (holder) {
+            is ContactItemShortViewHolder -> {
+                if (payloads.isEmpty()) {
+                    onBindViewHolder(holder, position)
+                    return
+                }
+                val updatedItem: ContactItem = payloads.first() as ContactItem
+                holder.update(updatedItem)
+
+            }
+
+            is ContactItemFullViewHolder -> {
+                if (payloads.isEmpty()) {
+                    onBindViewHolder(holder, position)
+                    return
+                }
+                val updatedItem: ContactItem = payloads.first() as ContactItem
+                holder.update(updatedItem)
+            }
+        }
+        Log.d("xxx", "payload ${++count}")
+
     }
 
     inner class ContactItemShortViewHolder(private val binding: ListItemContactsShortBinding) :
@@ -78,6 +107,7 @@ class ContactsAdapter(
                 }
             }
         }
+
         fun update(updatedItem: ContactItem) {
             binding.root.isSelected = updatedItem.isSelected
             if (updatedItem.isSelected) {
@@ -88,7 +118,8 @@ class ContactsAdapter(
             }
             itemView.setOnClickListener {
                 onContactItemClickListener.invoke(updatedItem)
-                updatedItem.isSelected = !updatedItem.isSelected // Инвертируйте состояние при нажатии
+                updatedItem.isSelected =
+                    !updatedItem.isSelected
                 update(updatedItem)
             }
         }
@@ -97,18 +128,19 @@ class ContactsAdapter(
     inner class ContactItemFullViewHolder(private val binding: ListItemContactsFullBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindFull(contactItem: ContactItem) {
-             contactItem as ContactItem.Full
+            contactItem as ContactItem.Full
             with(binding) {
                 nameContact.text = contactItem.name
                 surNameContact.text = contactItem.surName
                 numberContact.text = contactItem.number
-                birthday.text =contactItem.birthDay
+                birthday.text = contactItem.birthDay
                 root.setOnClickListener {
                     onContactItemClickListener.invoke(contactItem)
                     update(contactItem)
                 }
             }
         }
+
         fun update(updatedItem: ContactItem) {
             binding.root.isSelected = updatedItem.isSelected
             if (updatedItem.isSelected) {
@@ -119,7 +151,7 @@ class ContactsAdapter(
             }
             itemView.setOnClickListener {
                 onContactItemClickListener.invoke(updatedItem)
-                updatedItem.isSelected = !updatedItem.isSelected // Инвертируйте состояние при нажатии
+                updatedItem.isSelected = !updatedItem.isSelected
                 update(updatedItem)
             }
         }

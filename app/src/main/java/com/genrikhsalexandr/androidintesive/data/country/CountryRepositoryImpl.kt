@@ -1,7 +1,7 @@
+/*
 package com.genrikhsalexandr.androidintesive.data.country
 
 import com.genrikhsalexandr.androidintesive.domain.country.CountryItem
-import com.genrikhsalexandr.androidintesive.domain.country.CountryListRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -38,11 +38,13 @@ class CountryRepositoryImpl:CountryListRepository {
 
     private val service: CountryService = retrofit.create(CountryService::class.java)
 
-    /*suspend fun getCountres():
+    */
+/*suspend fun getCountres():
     {
     }
-*/
+*//*
+
     override fun getCountryList(): List<CountryItem> {
         return getCountryList().toList()
     }
-}
+}*/

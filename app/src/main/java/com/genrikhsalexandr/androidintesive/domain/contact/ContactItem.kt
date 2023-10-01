@@ -4,37 +4,38 @@ import com.genrikhsalexandr.androidintesive.R
 
 sealed interface ContactItem {
 
+    val contact: Contact
+    val id: Int
     val name: String
     val surName: String
     val number: String
     var isSelected: Boolean
     val viewType: Int
-    var id: Int
 
     data class Full(
-        override val name: String,
-        override val surName: String,
-        override val number: String,
+        override val contact: Contact,
         override var isSelected: Boolean,
-        val birthDay: String,
-        override var id: Int = UNDEFINED_ID,
+    ) : ContactItem {
 
-        ) : ContactItem {
+        override val id: Int get() = contact.id
+        override val name: String get() = contact.name
+        override val surName: String get() = contact.surName
+        override val number: String get() = contact.number
+
+        val birthDay: String get() = contact.birthDay!!
+
         override val viewType: Int = R.layout.list_item_contacts_full
     }
     data class Short(
-
-        override val name: String,
-        override val surName: String,
-        override val number: String,
+        override val contact: Contact,
         override var isSelected: Boolean,
-        override var id: Int = UNDEFINED_ID,
     ) : ContactItem {
+
+        override val id: Int get() = contact.id
+        override val name: String get() = contact.name
+        override val surName: String get() = contact.surName
+        override val number: String get() = contact.number
+
         override val viewType: Int = R.layout.list_item_contacts_short
-    }
-
-        companion object{
-
-        const val UNDEFINED_ID = -1
     }
 }
