@@ -34,6 +34,7 @@ class ContactViewModel : ViewModel() {
         }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
+
     fun onItemClicked(item: ContactItem) {
         selectedItemsIds.value = if (selectedItemsIds.value.contains(item.id)) {
             selectedItemsIds.value.minus(item.id)
@@ -46,7 +47,7 @@ class ContactViewModel : ViewModel() {
         contactRepository.deleteContact(contactItem.contact)
     }
 
-    fun addContact(contactItem: ContactItem){
-        contactRepository.addContact(contactItem.contact)
+    fun addContact(contactItem: Contact){
+        contactRepository.addContact(contactItem)
     }
 }

@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.genrikhsalexandr.androidintesive.R
 import com.genrikhsalexandr.androidintesive.databinding.FragmentContactsBinding
+import com.genrikhsalexandr.androidintesive.domain.contact.Contact
 import kotlinx.coroutines.launch
 
 
@@ -37,9 +39,10 @@ class ContactsFragment : Fragment() {
             viewModel.listItems.collect {
                 contactAdapter.submitList(it)
             }
-            binding.btContactItem.setOnClickListener {
-
-            }
+        }
+        binding.btContactItem.setOnClickListener {
+            val newContact = Contact(id=0, name = "New name", surName = "New surname", number = "+79990001234",birthDay = null)
+            viewModel.addContact(newContact)
         }
         return binding.root
     }

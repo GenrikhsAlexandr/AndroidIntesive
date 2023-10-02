@@ -8,6 +8,8 @@
     <string name="name">Имя</string>
     <string name="surname">Фамилия</string>
     <string name="phone_number">Номер телефрна</string>
+    <string name="birthday">День рождение</string>
+    <string name="save">Добавить</string>
 
     <string-array name="CountryCodes" >
         <item>93,AF</item>

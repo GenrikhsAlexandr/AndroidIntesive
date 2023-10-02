@@ -21,7 +21,6 @@ class ContactsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        Log.d("xxx", "onCreateViewHolder ${++count}")
         return when (viewType) {
             R.layout.list_item_contacts_short -> {
                 ContactItemShortViewHolder(
@@ -42,9 +41,7 @@ class ContactsAdapter(
                     )
                 )
             }
-
             else -> error("Unknown view type: $viewType")
-
         }
     }
 

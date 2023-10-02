@@ -36,7 +36,7 @@ object ContactRepositoryImpl  {
     }
 
     fun addContact(contact: Contact) {
-        val id = autoIncrementId++
+        val id = ++autoIncrementId
         _contactsList.value = _contactsList.value.plus(
             contact.copy(id = id)
         )
