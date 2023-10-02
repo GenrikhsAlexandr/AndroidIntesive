@@ -1,4 +1,4 @@
-package com.genrikhsalexandr.androidintesive
+package com.genrikhsalexandr.androidintesive.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.genrikhsalexandr.androidintesive.R
 import com.genrikhsalexandr.androidintesive.databinding.FragmentUserDetailBinding
 
-class UserDetailFragment : Fragment() {
+class ContactDetailFragment : Fragment() {
 
     private var _binding: FragmentUserDetailBinding? = null
     private val binding: FragmentUserDetailBinding get() = _binding!!
@@ -48,7 +49,7 @@ class UserDetailFragment : Fragment() {
 
     private fun editFragment() {
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.containerFragment, EditUserFragment.newInstance())
+            .replace(R.id.containerFragment, EditContactFragment.newInstance())
             .addToBackStack(null)
             .commit()
     }
@@ -57,8 +58,8 @@ class UserDetailFragment : Fragment() {
 
         const val NAME = "EditFragment"
 
-        fun newInstance(): UserDetailFragment {
-            return UserDetailFragment()
+        fun newInstance(): ContactDetailFragment {
+            return ContactDetailFragment()
         }
     }
 

@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/containerFragment"
-    android:name="com.genrikhsalexandr.androidintesive.UserListFragment"
+    android:name="com.genrikhsalexandr.androidintesive.presentation.ContactListFragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".MainActivity"
+    tools:context=".presentation.MainActivity"
     tools:layout="@layout/fragment_user_list">
 
 </androidx.fragment.app.FragmentContainerView>

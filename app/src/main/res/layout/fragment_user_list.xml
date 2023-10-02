@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#D1D1D1"
-    tools:context=".UserListFragment">
+    tools:context=".presentation.ContactListFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvContacts"
@@ -30,6 +30,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvContacts"
         tools:itemCount="7"
-        tools:listitem="@layout/user_list_item" />
+        tools:listitem="@layout/contact_list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
