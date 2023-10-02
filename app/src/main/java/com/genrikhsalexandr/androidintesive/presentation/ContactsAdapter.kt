@@ -17,8 +17,6 @@ class ContactsAdapter(
 
     var count = 0
     override fun getItemViewType(position: Int): Int {
-        Log.d("xxx", "getItemViewType $position")
-
         return getItem(position).viewType
     }
 

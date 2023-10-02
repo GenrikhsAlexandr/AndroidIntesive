@@ -45,4 +45,8 @@ class ContactViewModel : ViewModel() {
     fun delContactItem(contactItem: ContactItem) {
         contactRepository.deleteContact(contactItem.contact)
     }
+
+    fun addContact(contactItem: ContactItem){
+        contactRepository.addContact(contactItem.contact)
+    }
 }

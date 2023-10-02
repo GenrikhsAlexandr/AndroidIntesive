@@ -37,6 +37,9 @@ class ContactsFragment : Fragment() {
             viewModel.listItems.collect {
                 contactAdapter.submitList(it)
             }
+            binding.btContactItem.setOnClickListener {
+
+            }
         }
         return binding.root
     }
@@ -75,4 +78,3 @@ class ContactsFragment : Fragment() {
         _binding = null
     }
 }
-
