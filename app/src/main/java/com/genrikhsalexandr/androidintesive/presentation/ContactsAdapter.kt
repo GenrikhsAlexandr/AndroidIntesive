@@ -10,7 +10,6 @@ import com.genrikhsalexandr.androidintesive.databinding.ListItemContactsFullBind
 import com.genrikhsalexandr.androidintesive.databinding.ListItemContactsShortBinding
 import com.genrikhsalexandr.androidintesive.domain.contact.ContactItem
 
-
 class ContactsAdapter(
     var onContactItemClickListener: ((ContactItem) -> Unit)
 ) : ListAdapter<ContactItem, RecyclerView.ViewHolder>(ContactDiffCallback()) {
@@ -21,6 +20,7 @@ class ContactsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        Log.d("xxx", "onCreateViewHolder ${++count}")
         return when (viewType) {
             R.layout.list_item_contacts_short -> {
                 ContactItemShortViewHolder(
@@ -41,7 +41,9 @@ class ContactsAdapter(
                     )
                 )
             }
+
             else -> error("Unknown view type: $viewType")
+
         }
     }
 
@@ -96,10 +98,7 @@ class ContactsAdapter(
                 nameContact.text = contactItem.name
                 surNameContact.text = contactItem.surName
                 numberContact.text = contactItem.number
-                root.setOnClickListener {
-                    onContactItemClickListener.invoke(contactItem)
-                    update(contactItem)
-                }
+                update(contactItem)
             }
         }
 
@@ -107,7 +106,6 @@ class ContactsAdapter(
             binding.root.isSelected = updatedItem.isSelected
             if (updatedItem.isSelected) {
                 binding.root.setBackgroundColor(itemView.context.getColor(R.color.blue))
-
             } else {
                 binding.root.setBackgroundColor(itemView.context.getColor(R.color.white))
             }
@@ -129,10 +127,7 @@ class ContactsAdapter(
                 surNameContact.text = contactItem.surName
                 numberContact.text = contactItem.number
                 birthday.text = contactItem.birthDay
-                root.setOnClickListener {
-                    onContactItemClickListener.invoke(contactItem)
-                    update(contactItem)
-                }
+                update(contactItem)
             }
         }
 

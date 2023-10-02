@@ -22,8 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_account"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:src="@drawable/ic_account" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/nameContact"
@@ -31,8 +30,6 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Имя" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -42,8 +39,6 @@
                 android:layout_marginStart="8dp"
                 android:text=""
                 android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nameContact"
                 tools:text="Фамилия" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -57,11 +52,8 @@
                 android:id="@+id/iconPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_phone"
                 android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/tlPhone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tlPhone" />
+                android:src="@drawable/ic_phone" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/numberContact"
@@ -70,8 +62,6 @@
                 android:inputType="phone"
                 android:text=""
                 android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/surNameContact"
                 tools:text="Номер телефона" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -85,11 +75,8 @@
                 android:id="@+id/iconBirthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_birthday"
                 android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/tlPhone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tlPhone" />
+                android:src="@drawable/ic_birthday" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/birthday"
@@ -97,8 +84,6 @@
                 android:layout_height="wrap_content"
                 android:inputType="date"
                 android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/surNameContact"
                 tools:text="07.06.1983" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
