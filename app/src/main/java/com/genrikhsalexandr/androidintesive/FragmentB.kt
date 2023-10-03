@@ -20,14 +20,15 @@ class FragmentB : Fragment() {
 
             with(binding) {
                 btFragmentC.setOnClickListener {
-                   fragmentC()
-                    btBackA.setOnClickListener {
-                        requireActivity().supportFragmentManager.popBackStack()
-                    }
+                    fragmentC()
+                }
+                btBackA.setOnClickListener {
+                    requireActivity().supportFragmentManager.popBackStack()
                 }
             }
             return binding.root
-        }
+            }
+
 
     private fun fragmentC() {
         requireActivity().supportFragmentManager.beginTransaction()
