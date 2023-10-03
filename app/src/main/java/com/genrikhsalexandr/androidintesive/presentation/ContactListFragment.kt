@@ -1,26 +1,27 @@
 package com.genrikhsalexandr.androidintesive.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.genrikhsalexandr.androidintesive.R
-import com.genrikhsalexandr.androidintesive.databinding.FragmentUserListBinding
+import com.genrikhsalexandr.androidintesive.databinding.FragmentContactListBinding
 import kotlinx.coroutines.launch
 
 class ContactListFragment : Fragment() {
 
     private val viewModel: ContactViewModel by viewModels()
 
-    private var _binding: FragmentUserListBinding? = null
-    private val binding: FragmentUserListBinding get() = _binding!!
+    private var _binding: FragmentContactListBinding? = null
+    private val binding: FragmentContactListBinding get() = _binding!!
 
     private val contactAdapter: ContactAdapter = ContactAdapter(
-        onContactItemClickListener = { clickedContactItem ->
-            viewModel.onItemClicked(clickedContactItem)
+        onContactItemClickListener = { contact ->
+            DetailContactFragment.show(
+                contact, fragmentManager = childFragmentManager
+            )
         },
     )
 
@@ -28,19 +29,19 @@ class ContactListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentUserListBinding.inflate(inflater, container, false)
-        binding.listItemContacts.adapter = contactAdapter
-
-
+        _binding = FragmentContactListBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
-    private fun detailFragment() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.containerFragment, ContactDetailFragment.newInstance())
-            .addToBackStack(null)
-            .commit()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.listItemContacts.adapter = contactAdapter
+
+        lifecycleScope.launch {
+            viewModel.contactsList.collect() {
+                contactAdapter.submitList(it)
+            }
+        }
     }
 
     override fun onDestroyView() {

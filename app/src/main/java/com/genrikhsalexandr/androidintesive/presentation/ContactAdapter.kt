@@ -6,13 +6,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.genrikhsalexandr.androidintesive.databinding.ContactListItemBinding
 import com.genrikhsalexandr.androidintesive.domain.Contact
+import com.genrikhsalexandr.androidintesive.domain.ContactItemList
 
 class ContactAdapter(
     var onContactItemClickListener: ((Contact) -> Unit)
-) : ListAdapter<Contact, ContactAdapter.ContactViewHolder>(ContactDiffUtil()) {
+) : ListAdapter<ContactItemList, ContactAdapter.ContactViewHolder>(ContactDiffUtil()) {
 
     override fun getItemViewType(position: Int): Int {
-        return getItem(position).viewType
+        return getItem(position).contact.viewType
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
@@ -22,7 +23,6 @@ class ContactAdapter(
                 parent, false
             )
         )
-
     }
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
@@ -31,14 +31,13 @@ class ContactAdapter(
 
     inner class ContactViewHolder(private val binding: ContactListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(contactItem: Contact) {
+        fun bind(contactItem: ContactItemList) {
             with(binding) {
                 nameContact.text = contactItem.name
                 surNameContact.text = contactItem.surName
-                numberContact.text = contactItem.number
-                iconContact.setImageResource(contactItem.image)
                 root.setOnClickListener {
-                    onContactItemClickListener(contactItem)
+                    onContactItemClickListener(contactItem.contact)
+
                 }
             }
         }

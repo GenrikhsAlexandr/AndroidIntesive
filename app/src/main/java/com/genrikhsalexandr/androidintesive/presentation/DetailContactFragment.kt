@@ -5,25 +5,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import com.genrikhsalexandr.androidintesive.R
-import com.genrikhsalexandr.androidintesive.databinding.FragmentUserDetailBinding
+import com.genrikhsalexandr.androidintesive.databinding.FragmentContactDetailBinding
+import com.genrikhsalexandr.androidintesive.domain.Contact
 
-class ContactDetailFragment : Fragment() {
+class DetailContactFragment(private val contact: Contact) : DialogFragment() {
+        companion object {
+            private const val TAG = "DetailContactFragment"
 
-    private var _binding: FragmentUserDetailBinding? = null
-    private val binding: FragmentUserDetailBinding get() = _binding!!
+            fun show(contact: Contact, fragmentManager: FragmentManager) {
+                val detailFragment = DetailContactFragment(contact)
+                detailFragment.show(
+                    fragmentManager,
+                    TAG
+                )
+            }
+        }
+
+    private var _binding: FragmentContactDetailBinding? = null
+    private val binding: FragmentContactDetailBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentUserDetailBinding.inflate(inflater, container, false)
-        binding.btEdit.setOnClickListener {
-            editFragment()
+        _binding = FragmentContactDetailBinding.inflate(inflater, container, false)
+            .apply {
+                iconContact.id = contact.image
+                nameContact.text = contact.name
+                surNameContact.text = contact.surName
+                numberContact.text = contact.number
+            }
 
-        }
         return binding.root
     }
 
@@ -45,22 +59,6 @@ class ContactDetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun editFragment() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.containerFragment, EditContactFragment.newInstance())
-            .addToBackStack(null)
-            .commit()
-    }
-
-    companion object {
-
-        const val NAME = "EditFragment"
-
-        fun newInstance(): ContactDetailFragment {
-            return ContactDetailFragment()
-        }
     }
 
 }

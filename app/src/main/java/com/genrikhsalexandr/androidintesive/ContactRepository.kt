@@ -1,6 +1,7 @@
 package com.genrikhsalexandr.androidintesive
 
 import com.genrikhsalexandr.androidintesive.domain.Contact
+import com.genrikhsalexandr.androidintesive.domain.ContactItemList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -10,8 +11,6 @@ object ContactRepository {
 
     private val _contactsList: MutableStateFlow<List<Contact>> = MutableStateFlow(emptyList())
     val contactsList: StateFlow<List<Contact>> = _contactsList
-    private var autoIncrementId = MAX_INITIAL_ID
-
     init {
         _contactsList.value = buildList {
             for (a in 1..MAX_INITIAL_ID) {
@@ -26,18 +25,5 @@ object ContactRepository {
                 add(item)
             }
         }
-    }
-
-    fun addContact(contact: Contact) {
-        val id = ++autoIncrementId
-        _contactsList.value = _contactsList.value.plus(
-            contact.copy(id = id)
-        )
-    }
-
-    fun deleteContact(contact: Contact) {
-        _contactsList.value = contactsList.value.minus(
-            contact
-        )
     }
 }

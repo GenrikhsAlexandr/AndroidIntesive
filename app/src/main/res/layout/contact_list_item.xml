@@ -8,12 +8,6 @@
     tools:context=".presentation.ContactListFragment"
     android:id="@+id/list_item">
 
-    <ImageView
-        android:id="@+id/iconContact"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_android" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/nameContact"
