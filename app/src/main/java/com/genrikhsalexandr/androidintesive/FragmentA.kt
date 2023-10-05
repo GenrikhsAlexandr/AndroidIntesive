@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.genrikhsalexandr.androidintesive.databinding.FragmentABinding
 
 class FragmentA : Fragment() {
@@ -18,16 +19,13 @@ class FragmentA : Fragment() {
     ): View {
         _binding = FragmentABinding.inflate(inflater, container, false)
         binding.btFragmentB.setOnClickListener {
-            fragmentB()
+            toFragmentB()
         }
         return binding.root
     }
 
-    private fun fragmentB() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.containerFragment, FragmentB.newInstance())
-            .addToBackStack(null)
-            .commit()
+    private fun toFragmentB(){
+        findNavController().navigate(R.id.action_fragmentA_to_fragmentB)
     }
 
     override fun onDestroyView() {

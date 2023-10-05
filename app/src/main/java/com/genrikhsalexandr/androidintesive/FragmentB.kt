@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.genrikhsalexandr.androidintesive.databinding.FragmentBBinding
 
 class FragmentB : Fragment() {
@@ -15,35 +16,32 @@ class FragmentB : Fragment() {
         override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-        ): View? {
+        ): View {
             _binding = FragmentBBinding.inflate(inflater, container, false)
 
             with(binding) {
                 btFragmentC.setOnClickListener {
-                    fragmentC()
+                    toFragmentC()
                 }
                 btBackA.setOnClickListener {
-                    requireActivity().supportFragmentManager.popBackStack()
+                    toFragmentA()
                 }
             }
             return binding.root
             }
 
 
-    private fun fragmentC() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.containerFragment, FragmentC.newInstance())
-            .addToBackStack(null)
-            .commit()
-        }
-
+    private fun toFragmentC(){
+        val hello = "Hello Fragment C"
+        val bundle =Bundle()
+        bundle.putString("message", hello)
+        findNavController().navigate(R.id.action_fragmentB_to_fragmentC, bundle)
+    }
+    private fun toFragmentA(){
+        findNavController().navigate(R.id.action_fragmentB_to_fragmentA)
+    }
         override fun onDestroyView() {
             super.onDestroyView()
             _binding = null
         }
-    companion object {
-        fun newInstance(): FragmentB {
-            return FragmentB()
-        }
-    }
 }
