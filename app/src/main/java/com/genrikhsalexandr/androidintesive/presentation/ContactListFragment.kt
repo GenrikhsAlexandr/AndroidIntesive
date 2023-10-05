@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.genrikhsalexandr.androidintesive.R
 import com.genrikhsalexandr.androidintesive.databinding.FragmentContactListBinding
+import com.genrikhsalexandr.androidintesive.domain.Contact
 import kotlinx.coroutines.launch
 
 class ContactListFragment : Fragment() {
@@ -19,9 +22,7 @@ class ContactListFragment : Fragment() {
 
     private val contactAdapter: ContactAdapter = ContactAdapter(
         onContactItemClickListener = { contact ->
-            DetailContactFragment.show(
-                contact, fragmentManager = childFragmentManager
-            )
+            showDetail(contact)
         },
     )
 
@@ -44,6 +45,16 @@ class ContactListFragment : Fragment() {
         }
     }
 
+    private fun showDetail(contact: Contact) {
+        val detailFragment = DetailContactFragment.createInstance(
+            contact
+        )
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.commit {
+            replace(R.id.containerFragment, detailFragment)
+            addToBackStack(null)
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

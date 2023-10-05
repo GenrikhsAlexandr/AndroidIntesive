@@ -26,7 +26,8 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_android"/>
+            android:clickable="true"
+            android:onClick="onImageViewClick"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tlNameContact"
@@ -41,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:text=""
                 android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -56,6 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:text=""
                 android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,6 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
+                android:text=""
                 android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title" />
         </com.google.android.material.textfield.TextInputLayout>
 

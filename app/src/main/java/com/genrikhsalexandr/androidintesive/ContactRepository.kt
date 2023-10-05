@@ -20,7 +20,7 @@ object ContactRepository {
                     name = " Вася $a",
                     surName = "Иванов $a",
                     number = "+7$number",
-                    image = R.drawable.ic_android
+                    image = R.drawable.ic_account
                 )
                 add(item)
             }
