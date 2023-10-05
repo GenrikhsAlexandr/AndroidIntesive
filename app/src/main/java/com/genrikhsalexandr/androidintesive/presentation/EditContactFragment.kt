@@ -7,11 +7,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import com.genrikhsalexandr.androidintesive.R
+import com.genrikhsalexandr.androidintesive.ContactRepository
 import com.genrikhsalexandr.androidintesive.databinding.FragmentContactEditBinding
 import com.genrikhsalexandr.androidintesive.domain.Contact
 
@@ -50,7 +48,14 @@ class EditContactFragment : Fragment() {
                 surNameContact.setText(contact.surName)
                 numberContact.setText(contact.number)
                 btSave.setOnClickListener {
-                    showEdit(contact)
+                    val updatedContact = Contact(
+                        id = contact.id,
+                        name = nameContact.text.toString(),
+                        surName = surNameContact.text.toString(),
+                        number = numberContact.text.toString(),
+                        image = contact.image)
+                    ContactRepository.updateContact(updatedContact)
+                    requireActivity().supportFragmentManager.popBackStack()
                 }
                 iconContact.setOnClickListener {
                     onImageViewClick()
@@ -58,6 +63,7 @@ class EditContactFragment : Fragment() {
             }
         return binding.root
     }
+
     private fun onImageViewClick() {
         openImagePickerDialog()
     }
@@ -77,30 +83,6 @@ class EditContactFragment : Fragment() {
             }
         }
     }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val onBackInvokeCallBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                backDetailUserFragment()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(onBackInvokeCallBack)
-    }
-private fun backDetailUserFragment() {
-    requireActivity().supportFragmentManager.popBackStack()
-
-}
-
-private fun showEdit(contact: Contact) {
-    val detailContactFragment = DetailContactFragment.createInstance(contact)
-    val fragmentManager = requireActivity().supportFragmentManager
-    fragmentManager.commit {
-        replace(R.id.containerFragment, detailContactFragment)
-        addToBackStack(null)
-    }
-}
 
     override fun onDestroyView() {
         super.onDestroyView()

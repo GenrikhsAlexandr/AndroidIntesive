@@ -1,7 +1,6 @@
 package com.genrikhsalexandr.androidintesive
 
 import com.genrikhsalexandr.androidintesive.domain.Contact
-import com.genrikhsalexandr.androidintesive.domain.ContactItemList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -23,6 +22,16 @@ object ContactRepository {
                     image = R.drawable.ic_account
                 )
                 add(item)
+            }
+        }
+    }
+
+    fun updateContact(updatedContact: Contact) {
+        _contactsList.value = _contactsList.value.map { contact ->
+            if (contact.id == updatedContact.id) {
+               updatedContact
+            } else {
+                contact
             }
         }
     }

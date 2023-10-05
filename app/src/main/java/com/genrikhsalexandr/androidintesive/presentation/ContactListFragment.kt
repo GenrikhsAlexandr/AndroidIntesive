@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
@@ -43,7 +44,18 @@ class ContactListFragment : Fragment() {
                 contactAdapter.submitList(it)
             }
         }
+        val onBackInvokeCallBack = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                backContactListFragment()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(onBackInvokeCallBack)
     }
+
+    private fun backContactListFragment() {
+        requireActivity().finish()
+    }
+
 
     private fun showDetail(contact: Contact) {
         val detailFragment = DetailContactFragment.createInstance(

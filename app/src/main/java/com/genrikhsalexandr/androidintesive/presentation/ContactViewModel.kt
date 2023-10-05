@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.genrikhsalexandr.androidintesive.ContactRepository
 import com.genrikhsalexandr.androidintesive.domain.Contact
 import com.genrikhsalexandr.androidintesive.domain.ContactItemList
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -26,5 +25,4 @@ class ContactViewModel: ViewModel() {
             )
         }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
-
 }
