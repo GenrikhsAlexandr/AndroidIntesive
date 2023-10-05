@@ -18,18 +18,29 @@
         android:id="@+id/fragmentB"
         android:name="com.genrikhsalexandr.androidintesive.FragmentB"
         android:label="fragment_b"
-        tools:layout="@layout/fragment_b" >
+        tools:layout="@layout/fragment_b">
+
+        <argument
+            android:name="hello"
+            app:argType="string"
+            android:defaultValue="0" />
+    </fragment>
         <action
             android:id="@+id/action_fragmentB_to_fragmentC"
             app:destination="@id/fragmentC" />
+
         <action
             android:id="@+id/action_fragmentB_to_fragmentA"
             app:popUpTo="@id/fragmentA" />
-    </fragment>
+
     <fragment
         android:id="@+id/fragmentC"
         android:name="com.genrikhsalexandr.androidintesive.FragmentC"
         android:label="FragmentC" >
+        <argument
+            android:name="hello"
+            app:argType="string"
+            android:defaultValue="0" />
         <action
             android:id="@+id/action_fragmentC_to_fragmentD"
             app:destination="@id/fragmentD" />
