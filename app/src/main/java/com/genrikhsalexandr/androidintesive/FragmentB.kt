@@ -32,7 +32,7 @@ class FragmentB : Fragment() {
 
     private fun toFragmentC() {
         val hello = "Hello Fragment C"
-        val action = FragmentADirections.actionFragmentAToFragmentB(hello)
+        val action = FragmentADirections.actionFragmentBToFragmentC(hello)
         findNavController().navigate(action)
     }
 
