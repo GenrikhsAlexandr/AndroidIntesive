@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.genrikhsalexandr.androidintesive.databinding.FragmentDBinding
+import com.github.terrakok.cicerone.androidx.FragmentScreen
 
-class FragmentD: Fragment() {
+class FragmentD : Fragment() {
 
     private var _binding: FragmentDBinding? = null
     private val binding: FragmentDBinding get() = _binding!!
@@ -19,11 +19,14 @@ class FragmentD: Fragment() {
     ): View {
         _binding = FragmentDBinding.inflate(inflater, container, false)
         binding.btBackB.setOnClickListener {
-            toFragmentA()
+            FragmentApplication.INSTANCE.router.backTo(FragmentScreen { FragmentA() })
         }
         return binding.root
     }
-    private fun toFragmentA(){
-        findNavController().navigate(R.id.action_fragmentD_to_fragmentA)
+
+    companion object {
+        fun newInstance(): FragmentD {
+            return FragmentD()
+        }
     }
 }

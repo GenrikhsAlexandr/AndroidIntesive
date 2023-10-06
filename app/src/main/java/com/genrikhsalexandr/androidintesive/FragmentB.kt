@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.genrikhsalexandr.androidintesive.FragmentBDirections.Companion.actionFragmentBToFragmentC
 import com.genrikhsalexandr.androidintesive.databinding.FragmentBBinding
+import com.github.terrakok.cicerone.androidx.FragmentScreen
 
 class FragmentB : Fragment() {
 
@@ -22,24 +21,21 @@ class FragmentB : Fragment() {
 
         with(binding) {
             btFragmentC.setOnClickListener {
-                toFragmentC()
+                FragmentApplication.INSTANCE.router.navigateTo(FragmentScreen { FragmentC.newInstance() })
+
             }
             btBackA.setOnClickListener {
-                toFragmentA()
+                FragmentApplication.INSTANCE.router.backTo(FragmentScreen { FragmentA() })
+
             }
         }
         return binding.root
     }
 
-
-    private fun toFragmentC() {
-        val hello = "Hello Fragment C"
-        val action = FragmentADirections.actionFragmentAToFragmentB(hello)
-        findNavController().navigate(action)
-    }
-
-    private fun toFragmentA() {
-        findNavController().navigate(R.id.action_fragmentB_to_fragmentA)
+    companion object {
+        fun newInstance(): FragmentB {
+            return FragmentB()
+        }
     }
 
     override fun onDestroyView() {

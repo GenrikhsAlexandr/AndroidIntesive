@@ -5,16 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.genrikhsalexandr.androidintesive.databinding.FragmentCBinding
+import com.github.terrakok.cicerone.androidx.FragmentScreen
 
 class FragmentC : Fragment() {
 
     private var _binding: FragmentCBinding? = null
     private val binding: FragmentCBinding get() = _binding!!
-    private val args:FragmentBArgs by navArgs()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,22 +19,28 @@ class FragmentC : Fragment() {
     ): View {
         _binding = FragmentCBinding.inflate(inflater, container, false)
         with(binding) {
-            tvHello.text = args.hello
-            btFragmentD.setOnClickListener {
-                toFragmentD()
+            val message = arguments?.getString("message")
+            with(binding) {
+                tvHello.text = message
+                btFragmentD.setOnClickListener {
+                    FragmentApplication.INSTANCE.router.navigateTo(FragmentScreen { FragmentD.newInstance() })
+                }
             }
             btBackB.setOnClickListener {
-                toFragmentB()
+                FragmentApplication.INSTANCE.router.backTo(FragmentScreen { FragmentB() })
             }
         }
         return binding.root
     }
 
-    private fun toFragmentD(){
-        findNavController().navigate(R.id.action_fragmentC_to_fragmentD)
-    }
-    private fun toFragmentB(){
-        findNavController().navigate(R.id.action_fragmentC_to_fragmentB)
+    companion object {
+        fun newInstance(): FragmentC {
+            return FragmentC().apply {
+                arguments = Bundle().apply {
+                    putString("message", "Hello Fragment C")
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
