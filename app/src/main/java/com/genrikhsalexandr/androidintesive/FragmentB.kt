@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.genrikhsalexandr.androidintesive.FragmentBDirections.Companion.actionFragmentBToFragmentC
 import com.genrikhsalexandr.androidintesive.databinding.FragmentBBinding
 
 class FragmentB : Fragment() {
@@ -30,7 +29,6 @@ class FragmentB : Fragment() {
         }
         return binding.root
     }
-
 
     private fun toFragmentC() {
         val hello = "Hello Fragment C"

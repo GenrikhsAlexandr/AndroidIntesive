@@ -13,8 +13,7 @@ class FragmentC : Fragment() {
 
     private var _binding: FragmentCBinding? = null
     private val binding: FragmentCBinding get() = _binding!!
-    private val args:FragmentBArgs by navArgs()
-
+    private val args: FragmentBArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,10 +32,11 @@ class FragmentC : Fragment() {
         return binding.root
     }
 
-    private fun toFragmentD(){
+    private fun toFragmentD() {
         findNavController().navigate(R.id.action_fragmentC_to_fragmentD)
     }
-    private fun toFragmentB(){
+
+    private fun toFragmentB() {
         findNavController().navigate(R.id.action_fragmentC_to_fragmentB)
     }
 
