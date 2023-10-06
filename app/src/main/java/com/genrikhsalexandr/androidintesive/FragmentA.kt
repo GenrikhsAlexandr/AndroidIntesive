@@ -24,7 +24,7 @@ class FragmentA : Fragment() {
         return binding.root
     }
 
-    private fun toFragmentB(){
+    private fun toFragmentB() {
         findNavController().navigate(R.id.action_fragmentA_to_fragmentB)
     }
 

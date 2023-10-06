@@ -31,10 +31,11 @@ class FragmentC : Fragment() {
         return binding.root
     }
 
-    private fun toFragmentD(){
+    private fun toFragmentD() {
         findNavController().navigate(R.id.action_fragmentC_to_fragmentD)
     }
-    private fun toFragmentB(){
+
+    private fun toFragmentB() {
         findNavController().navigate(R.id.action_fragmentC_to_fragmentB)
     }
 
