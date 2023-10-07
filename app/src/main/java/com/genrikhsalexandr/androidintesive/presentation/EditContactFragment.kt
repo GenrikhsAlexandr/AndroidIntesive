@@ -2,7 +2,9 @@ package com.genrikhsalexandr.androidintesive.presentation
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,33 +31,38 @@ class EditContactFragment : Fragment() {
 
     private var _binding: FragmentContactEditBinding? = null
     private val binding: FragmentContactEditBinding get() = _binding!!
+    private var contact: Contact? = null
+
+    var imageUri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentContactEditBinding.inflate(inflater, container, false)
-        return binding.root
+        val contactId = requireArguments().getInt(BUNDLE_KEY_CONTACT)
+        contact = ContactRepository.getContact(contactId)
+        with(binding) {
+            contact?.let { contact ->
+                iconContact.setImageResource(contact.image)
+                nameContact.setText(contact.name)
+                surNameContact.setText(contact.surName)
+                numberContact.setText(contact.number) }
+            Log.d("EditContactFragment", "onStart")
+        }
 
+        return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        val contactId = requireArguments().getInt(BUNDLE_KEY_CONTACT)
-        val contact = ContactRepository.getContact(contactId)
-        with(binding) {
-            iconContact.setImageResource(contact.image)
-            nameContact.setText(contact.name)
-            surNameContact.setText(contact.surName)
-            numberContact.setText(contact.number)
-        }
         binding.btSave.setOnClickListener {
             val updatedContact = Contact(
-                id = contact.id,
+                id = contact!!.id,
                 name = binding.nameContact.text.toString(),
                 surName = binding.surNameContact.text.toString(),
                 number = binding.numberContact.text.toString(),
-                image = contact.image
+                image = contact!!.image,
             )
             ContactRepository.updateContact(updatedContact)
             requireActivity().supportFragmentManager.popBackStack()
@@ -68,18 +75,21 @@ class EditContactFragment : Fragment() {
     private fun onImageViewClick() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-   startActivityForResult(intent, PICK_IMAGE_REQUEST)}
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
-            binding.iconContact.setImageURI(data?.data)
-
+           imageUri = data?.data
+            binding.iconContact.setImageURI(imageUri)
         }
         super.onActivityResult(requestCode, resultCode, data)
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        Log.d("EditContactFragment", "onDestroyView")
     }
 }

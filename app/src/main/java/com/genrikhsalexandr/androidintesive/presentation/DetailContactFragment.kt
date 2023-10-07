@@ -1,6 +1,7 @@
 package com.genrikhsalexandr.androidintesive.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,6 +68,7 @@ class DetailContactFragment() : Fragment() {
             nameContact.text = contact.name
             surNameContact.text = contact.surName
             numberContact.text = contact.number
+            Log.d("xxx", "detailonStart${contact.image}")
         }
         binding.btEdit.setOnClickListener {
             val editFragment = EditContactFragment.createInstance(contact)
