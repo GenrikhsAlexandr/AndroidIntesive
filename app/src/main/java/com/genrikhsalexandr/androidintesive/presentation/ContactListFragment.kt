@@ -67,6 +67,7 @@ class ContactListFragment : Fragment() {
             addToBackStack(null)
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

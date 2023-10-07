@@ -19,7 +19,7 @@ object ContactRepository {
                     name = " Вася $a",
                     surName = "Иванов $a",
                     number = "+7$number",
-                    image = R.drawable.ic_account
+                    image = R.drawable.ic_person
                 )
                 add(item)
             }
@@ -34,5 +34,10 @@ object ContactRepository {
                 contact
             }
         }
+    }
+    fun getContact(contactId: Int):Contact{
+       return _contactsList.value.first{contact ->
+       contact.id == contactId
+       }
     }
 }

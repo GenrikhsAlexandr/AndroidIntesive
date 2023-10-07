@@ -1,7 +1,6 @@
 package com.genrikhsalexandr.androidintesive.presentation
 
 import androidx.recyclerview.widget.DiffUtil
-import com.genrikhsalexandr.androidintesive.domain.Contact
 import com.genrikhsalexandr.androidintesive.domain.ContactItemList
 
 class ContactDiffUtil : DiffUtil.ItemCallback<ContactItemList>() {

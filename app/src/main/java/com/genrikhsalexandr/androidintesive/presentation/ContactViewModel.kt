@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-class ContactViewModel: ViewModel() {
+class ContactViewModel : ViewModel() {
     private val contactRepository = ContactRepository
 
     private val _contactsList: StateFlow<List<Contact>> = contactRepository.contactsList

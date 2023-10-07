@@ -2,12 +2,10 @@ package com.genrikhsalexandr.androidintesive.presentation
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.genrikhsalexandr.androidintesive.ContactRepository
 import com.genrikhsalexandr.androidintesive.databinding.FragmentContactEditBinding
@@ -21,9 +19,10 @@ class EditContactFragment : Fragment() {
 
         fun createInstance(contact: Contact): EditContactFragment {
             return EditContactFragment().apply {
-                arguments = bundleOf(
-                    BUNDLE_KEY_CONTACT to contact
-                )
+                arguments = Bundle().apply {
+                    putInt(BUNDLE_KEY_CONTACT, contact.id)
+
+                }
             }
         }
     }
@@ -36,52 +35,47 @@ class EditContactFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentContactEditBinding.inflate(inflater, container, false)
-            .apply {
-                val args = requireArguments()
-                val contact = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    args.getParcelable(BUNDLE_KEY_CONTACT, Contact::class.java)!!
-                } else {
-                    args.getParcelable(BUNDLE_KEY_CONTACT)!!
-                }
-                iconContact.setImageResource(contact.image)
-                nameContact.setText(contact.name)
-                surNameContact.setText(contact.surName)
-                numberContact.setText(contact.number)
-                btSave.setOnClickListener {
-                    val updatedContact = Contact(
-                        id = contact.id,
-                        name = nameContact.text.toString(),
-                        surName = surNameContact.text.toString(),
-                        number = numberContact.text.toString(),
-                        image = contact.image)
-                    ContactRepository.updateContact(updatedContact)
-                    requireActivity().supportFragmentManager.popBackStack()
-                }
-                iconContact.setOnClickListener {
-                    onImageViewClick()
-                }
-            }
         return binding.root
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val contactId = requireArguments().getInt(BUNDLE_KEY_CONTACT)
+        val contact = ContactRepository.getContact(contactId)
+        with(binding) {
+            iconContact.setImageResource(contact.image)
+            nameContact.setText(contact.name)
+            surNameContact.setText(contact.surName)
+            numberContact.setText(contact.number)
+        }
+        binding.btSave.setOnClickListener {
+            val updatedContact = Contact(
+                id = contact.id,
+                name = binding.nameContact.text.toString(),
+                surName = binding.surNameContact.text.toString(),
+                number = binding.numberContact.text.toString(),
+                image = contact.image
+            )
+            ContactRepository.updateContact(updatedContact)
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+        binding.iconContact.setOnClickListener {
+            onImageViewClick()
+        }
     }
 
     private fun onImageViewClick() {
-        openImagePickerDialog()
-    }
-
-    private fun openImagePickerDialog() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-    }
+   startActivityForResult(intent, PICK_IMAGE_REQUEST)}
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
-            val selectedImageUri = data?.data
-            if (selectedImageUri != null) {
-                binding.iconContact.setImageURI(selectedImageUri)
-            }
+            binding.iconContact.setImageURI(data?.data)
+
         }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroyView() {
