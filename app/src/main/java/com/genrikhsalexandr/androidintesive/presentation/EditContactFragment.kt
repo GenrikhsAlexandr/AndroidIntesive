@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +32,7 @@ class EditContactFragment : Fragment() {
     private val binding: FragmentContactEditBinding get() = _binding!!
     private var contact: Contact? = null
 
-    var imageUri: Uri? = null
+    private var imageUri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,13 +43,12 @@ class EditContactFragment : Fragment() {
         contact = ContactRepository.getContact(contactId)
         with(binding) {
             contact?.let { contact ->
-                iconContact.setImageResource(contact.image)
+                iconContact.setImageURI(contact.image)
                 nameContact.setText(contact.name)
                 surNameContact.setText(contact.surName)
-                numberContact.setText(contact.number) }
-            Log.d("EditContactFragment", "onStart")
+                numberContact.setText(contact.number)
+            }
         }
-
         return binding.root
     }
 
@@ -62,7 +60,7 @@ class EditContactFragment : Fragment() {
                 name = binding.nameContact.text.toString(),
                 surName = binding.surNameContact.text.toString(),
                 number = binding.numberContact.text.toString(),
-                image = contact!!.image,
+                image = imageUri,
             )
             ContactRepository.updateContact(updatedContact)
             requireActivity().supportFragmentManager.popBackStack()
@@ -80,16 +78,14 @@ class EditContactFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
-           imageUri = data?.data
+            imageUri = data?.data
             binding.iconContact.setImageURI(imageUri)
         }
         super.onActivityResult(requestCode, resultCode, data)
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        Log.d("EditContactFragment", "onDestroyView")
     }
 }

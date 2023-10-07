@@ -37,7 +37,6 @@ class ContactAdapter(
                 surNameContact.text = contactItem.surName
                 root.setOnClickListener {
                     onContactItemClickListener(contactItem.contact)
-
                 }
             }
         }

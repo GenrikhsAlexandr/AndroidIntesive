@@ -38,7 +38,6 @@ class DetailContactFragment() : Fragment() {
     ): View {
         _binding = FragmentContactDetailBinding.inflate(inflater, container, false)
 
-
         return binding.root
     }
 
@@ -58,13 +57,12 @@ class DetailContactFragment() : Fragment() {
         )
     }
 
-
     override fun onStart() {
         super.onStart()
         val contactId = requireArguments().getInt(BUNDLE_KEY_CONTACT)
         val contact = ContactRepository.getContact(contactId)
         with(binding) {
-            iconContact.setImageResource(contact.image)
+            iconContact.setImageURI(contact.image)
             nameContact.text = contact.name
             surNameContact.text = contact.surName
             numberContact.text = contact.number

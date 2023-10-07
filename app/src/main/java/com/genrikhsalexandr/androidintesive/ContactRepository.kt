@@ -10,6 +10,7 @@ object ContactRepository {
 
     private val _contactsList: MutableStateFlow<List<Contact>> = MutableStateFlow(emptyList())
     val contactsList: StateFlow<List<Contact>> = _contactsList
+
     init {
         _contactsList.value = buildList {
             for (a in 1..MAX_INITIAL_ID) {
@@ -19,7 +20,7 @@ object ContactRepository {
                     name = " Вася $a",
                     surName = "Иванов $a",
                     number = "+7$number",
-                    image = R.drawable.ic_person
+                    image = null
                 )
                 add(item)
             }
@@ -29,15 +30,16 @@ object ContactRepository {
     fun updateContact(updatedContact: Contact) {
         _contactsList.value = _contactsList.value.map { contact ->
             if (contact.id == updatedContact.id) {
-               updatedContact
+                updatedContact
             } else {
                 contact
             }
         }
     }
-    fun getContact(contactId: Int):Contact{
-       return _contactsList.value.first{contact ->
-       contact.id == contactId
-       }
+
+    fun getContact(contactId: Int): Contact {
+        return _contactsList.value.first { contact ->
+            contact.id == contactId
+        }
     }
 }
