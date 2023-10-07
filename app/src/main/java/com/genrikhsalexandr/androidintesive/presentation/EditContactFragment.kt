@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import com.genrikhsalexandr.androidintesive.ContactRepository
 import com.genrikhsalexandr.androidintesive.databinding.FragmentContactEditBinding
 import com.genrikhsalexandr.androidintesive.domain.Contact
@@ -15,6 +17,8 @@ import com.genrikhsalexandr.androidintesive.domain.Contact
 class EditContactFragment : Fragment() {
     companion object {
         private val PICK_IMAGE_REQUEST = 1
+
+        private const val BUNDLE_KEY_SAVE_CONTACT = "save contact"
 
         private const val BUNDLE_KEY_CONTACT = "contact"
 
@@ -52,6 +56,10 @@ class EditContactFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     override fun onStart() {
         super.onStart()
         binding.btSave.setOnClickListener {
@@ -62,7 +70,12 @@ class EditContactFragment : Fragment() {
                 number = binding.numberContact.text.toString(),
                 image = imageUri,
             )
-            ContactRepository.updateContact(updatedContact)
+            setFragmentResult(
+                BUNDLE_KEY_SAVE_CONTACT, bundleOf(
+                    BUNDLE_KEY_SAVE_CONTACT to
+                            updatedContact
+                )
+            )
             requireActivity().supportFragmentManager.popBackStack()
         }
         binding.iconContact.setOnClickListener {

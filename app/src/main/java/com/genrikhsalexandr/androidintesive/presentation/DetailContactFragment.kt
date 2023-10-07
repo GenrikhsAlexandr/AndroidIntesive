@@ -1,13 +1,16 @@
 package com.genrikhsalexandr.androidintesive.presentation
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.fragment.app.setFragmentResultListener
 import com.genrikhsalexandr.androidintesive.ContactRepository
 import com.genrikhsalexandr.androidintesive.R
 import com.genrikhsalexandr.androidintesive.databinding.FragmentContactDetailBinding
@@ -18,6 +21,7 @@ class DetailContactFragment() : Fragment() {
     companion object {
 
         private const val BUNDLE_KEY_CONTACT = "contact"
+        private const val BUNDLE_KEY_SAVE_CONTACT = "save contact"
 
         fun createInstance(contact: Contact): DetailContactFragment {
             return DetailContactFragment().apply {
@@ -36,28 +40,6 @@ class DetailContactFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentContactDetailBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val onBackInvokeCallBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                backContactListFragment()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(onBackInvokeCallBack)
-    }
-
-    private fun backContactListFragment() {
-        requireActivity().supportFragmentManager.popBackStack(
-            null, FragmentManager.POP_BACK_STACK_INCLUSIVE
-        )
-    }
-
-    override fun onStart() {
-        super.onStart()
         val contactId = requireArguments().getInt(BUNDLE_KEY_CONTACT)
         val contact = ContactRepository.getContact(contactId)
         with(binding) {
@@ -74,6 +56,39 @@ class DetailContactFragment() : Fragment() {
                 addToBackStack(null)
             }
         }
+        return binding.root
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setFragmentResultListener(BUNDLE_KEY_SAVE_CONTACT) { _, bundle ->
+            val updatedContact = bundle.getParcelable<Contact>(
+                BUNDLE_KEY_SAVE_CONTACT
+            )
+            with(binding) {
+                updatedContact?.let {
+                    iconContact.setImageURI(updatedContact.image)
+                    nameContact.text = updatedContact.name
+                    surNameContact.text = updatedContact.surName
+                    numberContact.text = updatedContact.number
+                }
+            }
+            ContactRepository.updateContact(updatedContact!!)
+        }
+
+        val onBackInvokeCallBack = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                backContactListFragment()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(onBackInvokeCallBack)
+    }
+
+    private fun backContactListFragment() {
+        requireActivity().supportFragmentManager.popBackStack(
+            null, FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
     }
 
     override fun onDestroyView() {
