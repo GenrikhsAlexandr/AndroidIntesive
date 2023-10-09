@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".CFragment">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/nameFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="120dp"
+        android:text="FrafmentC"
+        android:textAppearance="@style/TextAppearance.Material3.LabelSmall"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvHello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+        tools:text="Hello Fragment C" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btFragmentD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="#40C4FF"
+        android:text="Fragment D"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btBackB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="#40C4FF"
+        android:text="Back B"
+        android:textAllCaps="false" />
+
+
+</LinearLayout>
