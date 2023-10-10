@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.fragment.app.setFragmentResultListener
 import com.genrikhsalexandr.androidintesive.ContactRepository
@@ -83,9 +82,7 @@ class DetailContactFragment() : Fragment() {
     }
 
     private fun backContactListFragment() {
-        requireActivity().supportFragmentManager.popBackStack(
-            null, FragmentManager.POP_BACK_STACK_INCLUSIVE
-        )
+        requireActivity().supportFragmentManager.popBackStack()
     }
 
     override fun onDestroyView() {
